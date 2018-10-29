@@ -1,0 +1,45 @@
+#默认使用配置
+spring:
+  profiles:
+    active: dev
+  application:
+    name: gohome
+
+server:
+  servlet:
+    context-path: /gohome
+  port: 8080
+
+mybatis:
+  typeAliasesPackage: com.hj.tj.gohome.entity
+  mapperLocations: classpath:mapper/*.xml
+
+---
+#开发配置
+spring:
+  profiles: dev
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/gohome
+    username: root
+    password: 821075358q
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+logging:
+  config: classpath:logconfig/logback_dev.xml
+
+---
+#正式环境
+spring:
+  profiles: prod
+
+  datasource:
+    url: jdbc:mysql://cdb-cpg22u4j.gz.tencentcdb.com:10017/gohome
+    username: root
+    password: huijia931
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+logging:
+  config: classpath:logconfig/logback_pro.xml

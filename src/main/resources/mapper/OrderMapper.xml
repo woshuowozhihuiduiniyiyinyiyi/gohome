@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hj.tj.gohome.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.hj.tj.gohome.entity.Order" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="destination" property="destination" jdbcType="VARCHAR" />
+    <result column="departure_date" property="departureDate" jdbcType="TIMESTAMP" />
+    <result column="train_number" property="trainNumber" jdbcType="VARCHAR" />
+    <result column="seat" property="seat" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="profit" property="profit" jdbcType="INTEGER" />
+    <result column="complete_date" property="completeDate" jdbcType="TIMESTAMP" />
+    <result column="owner_id" property="ownerId" jdbcType="INTEGER" />
+    <result column="portal_user_id" property="portalUserId" jdbcType="INTEGER" />
+    <result column="robbing_ticket_user_id" property="robbingTicketUserId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, origin, destination, departure_date, train_number, seat, price, profit, complete_date, 
+    owner_id, portal_user_id, robbing_ticket_user_id, status, created_at, updated_at
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hj.tj.gohome.entity.OrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from `order`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from `order`
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `order`
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hj.tj.gohome.entity.OrderExample" >
+    delete from `order`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.hj.tj.gohome.entity.Order" >
+    insert into `order` (id, origin, destination,
+      departure_date, train_number, seat, 
+      price, profit, complete_date, 
+      owner_id, portal_user_id, robbing_ticket_user_id, 
+      status, created_at, updated_at
+      )
+    values (#{id,jdbcType=INTEGER}, #{origin,jdbcType=VARCHAR}, #{destination,jdbcType=VARCHAR}, 
+      #{departureDate,jdbcType=TIMESTAMP}, #{trainNumber,jdbcType=VARCHAR}, #{seat,jdbcType=VARCHAR}, 
+      #{price,jdbcType=INTEGER}, #{profit,jdbcType=INTEGER}, #{completeDate,jdbcType=TIMESTAMP}, 
+      #{ownerId,jdbcType=INTEGER}, #{portalUserId,jdbcType=INTEGER}, #{robbingTicketUserId,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.Order" useGeneratedKeys="true" keyProperty="id">
+    insert into `order`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="origin != null" >
+        origin,
+      </if>
+      <if test="destination != null" >
+        destination,
+      </if>
+      <if test="departureDate != null" >
+        departure_date,
+      </if>
+      <if test="trainNumber != null" >
+        train_number,
+      </if>
+      <if test="seat != null" >
+        seat,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="profit != null" >
+        profit,
+      </if>
+      <if test="completeDate != null" >
+        complete_date,
+      </if>
+      <if test="ownerId != null" >
+        owner_id,
+      </if>
+      <if test="portalUserId != null" >
+        portal_user_id,
+      </if>
+      <if test="robbingTicketUserId != null" >
+        robbing_ticket_user_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="origin != null" >
+        #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="destination != null" >
+        #{destination,jdbcType=VARCHAR},
+      </if>
+      <if test="departureDate != null" >
+        #{departureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trainNumber != null" >
+        #{trainNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="seat != null" >
+        #{seat,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="profit != null" >
+        #{profit,jdbcType=INTEGER},
+      </if>
+      <if test="completeDate != null" >
+        #{completeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ownerId != null" >
+        #{ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="portalUserId != null" >
+        #{portalUserId,jdbcType=INTEGER},
+      </if>
+      <if test="robbingTicketUserId != null" >
+        #{robbingTicketUserId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hj.tj.gohome.entity.OrderExample" resultType="java.lang.Integer" >
+    select count(*) from `order`
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update `order`
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.origin != null" >
+        origin = #{record.origin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.destination != null" >
+        destination = #{record.destination,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departureDate != null" >
+        departure_date = #{record.departureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.trainNumber != null" >
+        train_number = #{record.trainNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seat != null" >
+        seat = #{record.seat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=INTEGER},
+      </if>
+      <if test="record.profit != null" >
+        profit = #{record.profit,jdbcType=INTEGER},
+      </if>
+      <if test="record.completeDate != null" >
+        complete_date = #{record.completeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ownerId != null" >
+        owner_id = #{record.ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.portalUserId != null" >
+        portal_user_id = #{record.portalUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.robbingTicketUserId != null" >
+        robbing_ticket_user_id = #{record.robbingTicketUserId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update `order`
+    set id = #{record.id,jdbcType=INTEGER},
+      origin = #{record.origin,jdbcType=VARCHAR},
+      destination = #{record.destination,jdbcType=VARCHAR},
+      departure_date = #{record.departureDate,jdbcType=TIMESTAMP},
+      train_number = #{record.trainNumber,jdbcType=VARCHAR},
+      seat = #{record.seat,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=INTEGER},
+      profit = #{record.profit,jdbcType=INTEGER},
+      complete_date = #{record.completeDate,jdbcType=TIMESTAMP},
+      owner_id = #{record.ownerId,jdbcType=INTEGER},
+      portal_user_id = #{record.portalUserId,jdbcType=INTEGER},
+      robbing_ticket_user_id = #{record.robbingTicketUserId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hj.tj.gohome.entity.Order" >
+    update `order`
+    <set >
+      <if test="origin != null" >
+        origin = #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="destination != null" >
+        destination = #{destination,jdbcType=VARCHAR},
+      </if>
+      <if test="departureDate != null" >
+        departure_date = #{departureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trainNumber != null" >
+        train_number = #{trainNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="seat != null" >
+        seat = #{seat,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="profit != null" >
+        profit = #{profit,jdbcType=INTEGER},
+      </if>
+      <if test="completeDate != null" >
+        complete_date = #{completeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ownerId != null" >
+        owner_id = #{ownerId,jdbcType=INTEGER},
+      </if>
+      <if test="portalUserId != null" >
+        portal_user_id = #{portalUserId,jdbcType=INTEGER},
+      </if>
+      <if test="robbingTicketUserId != null" >
+        robbing_ticket_user_id = #{robbingTicketUserId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hj.tj.gohome.entity.Order" >
+    update `order`
+    set origin = #{origin,jdbcType=VARCHAR},
+      destination = #{destination,jdbcType=VARCHAR},
+      departure_date = #{departureDate,jdbcType=TIMESTAMP},
+      train_number = #{trainNumber,jdbcType=VARCHAR},
+      seat = #{seat,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      profit = #{profit,jdbcType=INTEGER},
+      complete_date = #{completeDate,jdbcType=TIMESTAMP},
+      owner_id = #{ownerId,jdbcType=INTEGER},
+      portal_user_id = #{portalUserId,jdbcType=INTEGER},
+      robbing_ticket_user_id = #{robbingTicketUserId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
