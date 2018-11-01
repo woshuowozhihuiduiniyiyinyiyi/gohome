@@ -48,5 +48,5 @@ public interface OrderService {
      * @param id
      * @return
      */
-    void deleteOrder(Integer id);
+    void deleteOrder(List<Integer> id);
 }

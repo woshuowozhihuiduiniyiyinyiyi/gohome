@@ -78,13 +78,13 @@ public class OrderController {
 
     @RequestMapping("/order/delete")
     public JsonResponse deleteOrder(@RequestBody ApiRequest apiRequest) {
-        Integer id = apiRequest.getParamAsInteger("id");
+        List<Integer> orderIdList = JSONUtils.toList(apiRequest.getParam("orderIdList"), Integer.class);
 
-        if (Objects.isNull(id) || id.compareTo(0) < 0) {
+        if (CollectionUtils.isEmpty(orderIdList)) {
             throw new CustomException(ErrorMsgEnum.PARAM_ERROR);
         }
 
-        orderService.deleteOrder(id);
+        orderService.deleteOrder(orderIdList);
 
         return JsonResponse.newOk();
     }

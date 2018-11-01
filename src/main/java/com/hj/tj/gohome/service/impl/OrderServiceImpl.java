@@ -204,17 +204,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteOrder(Integer id) {
-        if (Objects.isNull(id)) {
+    public void deleteOrder(List<Integer> orderIdList) {
+        if (CollectionUtils.isEmpty(orderIdList)) {
             throw new CustomException(ErrorMsgEnum.PARAM_ERROR);
         }
 
         Order order = new Order();
         order.setStatus(OrderStatusEnum.DELETE.getValue());
         order.setUpdatedAt(new Date());
-        order.setId(id);
 
-        orderMapper.updateByPrimaryKeySelective(order);
+        OrderExample orderExample = new OrderExample();
+        orderExample.createCriteria().andIdIn(orderIdList);
+
+        orderMapper.updateByExampleSelective(order, orderExample);
     }
 
     /**
