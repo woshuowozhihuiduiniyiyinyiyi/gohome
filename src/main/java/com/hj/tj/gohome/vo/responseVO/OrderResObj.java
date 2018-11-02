@@ -1,21 +1,15 @@
 package com.hj.tj.gohome.vo.responseVO;
 
+import com.hj.tj.gohome.vo.requestVo.OwnerInsertReqObj;
+import com.hj.tj.gohome.vo.requestVo.OwnerResObj;
+
 import java.util.Date;
 import java.util.List;
 
 public class OrderResObj {
     private Integer id;
 
-    /**
-     * 微信昵称
-     */
-    private String ownerWxAccount;
-    private String ownerWxNickname;
-
-    /**
-     * 业主手机号
-     */
-    private String ownerPhone;
+    private OwnerResObj ownerResObj;
 
     /**
      * 出发时间
@@ -88,20 +82,12 @@ public class OrderResObj {
         this.id = id;
     }
 
-    public String getOwnerPhone() {
-        return ownerPhone;
+    public OwnerResObj getOwnerResObj() {
+        return ownerResObj;
     }
 
-    public void setOwnerPhone(String ownerPhone) {
-        this.ownerPhone = ownerPhone;
-    }
-
-    public String getOwnerWxAccount() {
-        return ownerWxAccount;
-    }
-
-    public void setOwnerWxAccount(String ownerWxAccount) {
-        this.ownerWxAccount = ownerWxAccount;
+    public void setOwnerResObj(OwnerResObj ownerResObj) {
+        this.ownerResObj = ownerResObj;
     }
 
     public String getPortalUserName() {
@@ -110,14 +96,6 @@ public class OrderResObj {
 
     public void setPortalUserName(String portalUserName) {
         this.portalUserName = portalUserName;
-    }
-
-    public String getOwnerWxNickname() {
-        return ownerWxNickname;
-    }
-
-    public void setOwnerWxNickname(String ownerWxNickname) {
-        this.ownerWxNickname = ownerWxNickname;
     }
 
     public Date getDepartureDate() {

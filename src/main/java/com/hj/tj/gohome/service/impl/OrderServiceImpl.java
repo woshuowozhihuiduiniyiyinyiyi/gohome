@@ -442,15 +442,19 @@ public class OrderServiceImpl implements OrderService {
             orderResObj.setPassengerInfo(passengerResObjs);
         }
 
-        orderResObj.setOwnerWxAccount("");
-        orderResObj.setOwnerWxNickname("");
-        orderResObj.setOwnerPhone("");
+
+        OwnerResObj ownerResObj = new OwnerResObj();
+        ownerResObj.setPhone("");
+        ownerResObj.setWxAccount("");
+        ownerResObj.setWxNickname("");
         if (Objects.nonNull(ownerMap.get(order.getOwnerId()))) {
             Owner owner = ownerMap.get(order.getOwnerId());
-            orderResObj.setOwnerWxAccount(owner.getWxAccount());
-            orderResObj.setOwnerWxNickname(owner.getWxNickname());
-            orderResObj.setOwnerPhone(owner.getPhone());
+            ownerResObj.setWxAccount(owner.getWxAccount());
+            ownerResObj.setWxNickname(owner.getWxNickname());
+            ownerResObj.setPhone(owner.getPhone());
+            ownerResObj.setId(owner.getId());
         }
+        orderResObj.setOwnerResObj(ownerResObj);
 
         orderResObj.setRobbingTicketUserName("");
         if (Objects.nonNull(robbingTicketUserMap.get(order.getRobbingTicketUserId()))) {
