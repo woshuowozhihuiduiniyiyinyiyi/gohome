@@ -9,7 +9,7 @@ import java.util.List;
 public class OrderResObj {
     private Integer id;
 
-    private OwnerResObj ownerResObj;
+    private OwnerResObj ownerInfo;
 
     /**
      * 出发时间
@@ -82,12 +82,12 @@ public class OrderResObj {
         this.id = id;
     }
 
-    public OwnerResObj getOwnerResObj() {
-        return ownerResObj;
+    public OwnerResObj getOwnerInfo() {
+        return ownerInfo;
     }
 
-    public void setOwnerResObj(OwnerResObj ownerResObj) {
-        this.ownerResObj = ownerResObj;
+    public void setOwnerInfo(OwnerResObj ownerInfo) {
+        this.ownerInfo = ownerInfo;
     }
 
     public String getPortalUserName() {

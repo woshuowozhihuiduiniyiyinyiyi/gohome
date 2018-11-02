@@ -454,7 +454,7 @@ public class OrderServiceImpl implements OrderService {
             ownerResObj.setPhone(owner.getPhone());
             ownerResObj.setId(owner.getId());
         }
-        orderResObj.setOwnerResObj(ownerResObj);
+        orderResObj.setOwnerInfo(ownerResObj);
 
         orderResObj.setRobbingTicketUserName("");
         if (Objects.nonNull(robbingTicketUserMap.get(order.getRobbingTicketUserId()))) {
