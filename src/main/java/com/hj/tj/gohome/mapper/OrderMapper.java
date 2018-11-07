@@ -28,4 +28,7 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+    // 查询总收益
+    int getTotalProfit(List<Byte> statusList);
 }

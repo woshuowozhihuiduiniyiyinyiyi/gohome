@@ -368,4 +368,15 @@
       updated_at = #{updatedAt,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!-- 根据状态列表查询总收益 -->
+  <select id="getTotalProfit" parameterType="List" resultType="java.lang.Integer" >
+    select sum(profit) from `order`
+      where status in
+      <foreach collection="list" item="status" index="index"
+               open="(" close=")" separator=",">
+        #{status}
+      </foreach>
+  </select>
+
 </mapper>

@@ -15,6 +15,7 @@ import com.hj.tj.gohome.vo.requestVo.OrderReqObj;
 import com.hj.tj.gohome.vo.requestVo.OwnerInsertReqObj;
 import com.hj.tj.gohome.vo.requestVo.PassengerInsertReqObj;
 import com.hj.tj.gohome.vo.responseVO.OrderResObj;
+import com.hj.tj.gohome.vo.responseVO.OrderStatisticDataResObj;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,6 +88,13 @@ public class OrderController {
         orderService.deleteOrder(orderIdList);
 
         return JsonResponse.newOk();
+    }
+
+    @RequestMapping("/order/statistic/data")
+    public JsonResponse statisticData(@RequestBody ApiRequest apiRequest) {
+        OrderStatisticDataResObj orderStatisticDataResObj = orderService.statisticData();
+
+        return JsonResponse.newOk(orderStatisticDataResObj);
     }
 
 

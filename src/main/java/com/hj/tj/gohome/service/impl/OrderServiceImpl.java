@@ -12,6 +12,7 @@ import com.hj.tj.gohome.utils.DateUtil;
 import com.hj.tj.gohome.utils.StringUtil;
 import com.hj.tj.gohome.vo.requestVo.*;
 import com.hj.tj.gohome.vo.responseVO.OrderResObj;
+import com.hj.tj.gohome.vo.responseVO.OrderStatisticDataResObj;
 import com.hj.tj.gohome.vo.responseVO.PassengerResObj;
 import org.hibernate.validator.constraints.pl.REGON;
 import org.slf4j.Logger;
@@ -217,6 +218,38 @@ public class OrderServiceImpl implements OrderService {
         orderExample.createCriteria().andIdIn(orderIdList);
 
         orderMapper.updateByExampleSelective(order, orderExample);
+    }
+
+    @Override
+    public OrderStatisticDataResObj statisticData() {
+        OrderStatisticDataResObj orderStatisticDataResObj = new OrderStatisticDataResObj();
+
+        List<Byte> statusList = Arrays.asList(OrderStatusEnum.CLOSED.getValue(), OrderStatusEnum.SUCCESS.getValue(),
+                OrderStatusEnum.ROBBING.getValue());
+
+        OrderExample orderExample = new OrderExample();
+        orderExample.createCriteria().andStatusIn(statusList);
+        int orderCount = orderMapper.countByExample(orderExample);
+
+        orderStatisticDataResObj.setTotalOrderCount(orderCount);
+
+        orderExample = new OrderExample();
+        orderExample.createCriteria().andStatusEqualTo(OrderStatusEnum.ROBBING.getValue());
+        int robbingCount = orderMapper.countByExample(orderExample);
+
+        orderStatisticDataResObj.setRobbingCount(robbingCount);
+
+        orderExample = new OrderExample();
+        orderExample.createCriteria().andStatusEqualTo(OrderStatusEnum.SUCCESS.getValue());
+        int successCount = orderMapper.countByExample(orderExample);
+
+        orderStatisticDataResObj.setSuccessCount(successCount);
+
+        int totalProfit = orderMapper.getTotalProfit(statusList);
+
+        orderStatisticDataResObj.setTotalProfit(totalProfit / 100.0);
+
+        return orderStatisticDataResObj;
     }
 
     /**

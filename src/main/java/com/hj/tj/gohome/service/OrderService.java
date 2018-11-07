@@ -4,6 +4,7 @@ import com.hj.tj.gohome.json.Page;
 import com.hj.tj.gohome.vo.requestVo.OrderInsertReqObj;
 import com.hj.tj.gohome.vo.requestVo.OrderReqObj;
 import com.hj.tj.gohome.vo.responseVO.OrderResObj;
+import com.hj.tj.gohome.vo.responseVO.OrderStatisticDataResObj;
 
 import java.util.List;
 
@@ -49,4 +50,9 @@ public interface OrderService {
      * @return
      */
     void deleteOrder(List<Integer> id);
+
+    /**
+     * 统计数据
+     */
+    OrderStatisticDataResObj statisticData();
 }
