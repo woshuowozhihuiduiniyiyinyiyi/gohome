@@ -49,7 +49,7 @@ public class OwnerServiceImpl implements OwnerService {
         BeanUtils.copyProperties(ownerInsertReqObj, owner);
         owner.setUpdatedAt(new Date());
 
-        if (CollectionUtils.isEmpty(owners)) {
+        if (CollectionUtils.isEmpty(owners) && Objects.isNull(ownerInsertReqObj.getId())) {
             owner.setCreatedAt(new Date());
             owner.setStatus(BaseStatusEnum.UN_DELETE.getValue());
             if (Objects.isNull(owner.getGender())) {
@@ -58,12 +58,13 @@ public class OwnerServiceImpl implements OwnerService {
 
             ownerMapper.insertSelective(owner);
         } else {
-            Owner tempOwner = owners.get(0);
-            owner.setId(tempOwner.getId());
+            owner.setId(ownerInsertReqObj.getId());
+
+            if (!CollectionUtils.isEmpty(owners)) {
+                owner.setId(owners.get(0).getId());
+            }
 
             ownerMapper.updateByPrimaryKeySelective(owner);
-
-
         }
 
         return owner.getId();
