@@ -40,7 +40,7 @@ public class OrderResObj {
     /**
      * 乘客信息
      */
-    private List<PassengerResObj> passengerInfo;
+    private List<PassengerResObj> passengerList;
 
     /**
      * 价格
@@ -55,6 +55,7 @@ public class OrderResObj {
     /**
      * 抢票人员
      */
+    private Integer robbingTicketUserId;
     private String robbingTicketUserName;
 
     /**
@@ -66,6 +67,7 @@ public class OrderResObj {
     /**
      * 接单人员
      */
+    private Integer portalUserId;
     private String portalUserName;
 
     /**
@@ -202,11 +204,27 @@ public class OrderResObj {
         this.createdAtStr = createdAtStr;
     }
 
-    public List<PassengerResObj> getPassengerInfo() {
-        return passengerInfo;
+    public List<PassengerResObj> getPassengerList() {
+        return passengerList;
     }
 
-    public void setPassengerInfo(List<PassengerResObj> passengerInfo) {
-        this.passengerInfo = passengerInfo;
+    public void setPassengerList(List<PassengerResObj> passengerList) {
+        this.passengerList = passengerList;
+    }
+
+    public Integer getRobbingTicketUserId() {
+        return robbingTicketUserId;
+    }
+
+    public void setRobbingTicketUserId(Integer robbingTicketUserId) {
+        this.robbingTicketUserId = robbingTicketUserId;
+    }
+
+    public Integer getPortalUserId() {
+        return portalUserId;
+    }
+
+    public void setPortalUserId(Integer portalUserId) {
+        this.portalUserId = portalUserId;
     }
 }

@@ -421,6 +421,8 @@ public class OrderServiceImpl implements OrderService {
         orderResObj.setDepartureDateStr(DateUtil.formatDateNormal(order.getDepartureDate()));
         orderResObj.setPrice(order.getPrice() / 100.0);
         orderResObj.setProfit(order.getProfit() / 100.0);
+        orderResObj.setRobbingTicketUserId(order.getPortalUserId());
+        orderResObj.setPortalUserId(order.getPortalUserId());
 
         orderResObj.setStatus(order.getStatus().intValue());
         OrderStatusEnum orderStatusEnum = OrderStatusEnum.getOrderStatusEnumByValue(order.getStatus());
@@ -428,7 +430,7 @@ public class OrderServiceImpl implements OrderService {
             orderResObj.setStatusStr(orderStatusEnum.getDescription());
         }
 
-        orderResObj.setPassengerInfo(new ArrayList<>());
+        orderResObj.setPassengerList(new ArrayList<>());
         if (Objects.nonNull(passengerInfoMap.get(order.getId()))) {
             List<Passenger> passengerList = passengerInfoMap.get(order.getId());
             List<PassengerResObj> passengerResObjs = new ArrayList<>();
@@ -439,7 +441,7 @@ public class OrderServiceImpl implements OrderService {
                 passengerResObjs.add(passengerResObj);
             }
 
-            orderResObj.setPassengerInfo(passengerResObjs);
+            orderResObj.setPassengerList(passengerResObjs);
         }
 
 
