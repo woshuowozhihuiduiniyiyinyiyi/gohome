@@ -272,7 +272,11 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        order.setStatus(BaseStatusEnum.UN_DELETE.getValue());
+        order.setStatus(orderInsertReqObj.getStatus().byteValue());
+        if (Objects.isNull(orderInsertReqObj.getStatus())) {
+            order.setStatus(BaseStatusEnum.UN_DELETE.getValue());
+        }
+
         order.setUpdatedAt(new Date());
 
         order.setOwnerId(ownerId);
@@ -454,6 +458,7 @@ public class OrderServiceImpl implements OrderService {
         orderResObj.setDepartureDateStr(DateUtil.formatDateNormal(order.getDepartureDate()));
         orderResObj.setPrice(order.getPrice() / 100.0);
         orderResObj.setProfit(order.getProfit() / 100.0);
+        orderResObj.setServicePrice((order.getPrice() - order.getProfit()) / 100.0);
         orderResObj.setRobbingTicketUserId(order.getPortalUserId());
         orderResObj.setPortalUserId(order.getPortalUserId());
 

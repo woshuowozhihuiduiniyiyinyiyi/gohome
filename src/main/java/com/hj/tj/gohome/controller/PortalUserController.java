@@ -49,4 +49,9 @@ public class PortalUserController {
 
         return JsonResponse.newOk(loginResObj);
     }
+
+    @RequestMapping("/portalUser/list")
+    public JsonResponse listPortalUserResObj(@RequestBody ApiRequest jsonRequest) {
+        return JsonResponse.newOk(portalUserService.listPortalUserResObj());
+    }
 }

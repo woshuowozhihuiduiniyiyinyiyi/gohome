@@ -1,6 +1,5 @@
 package com.hj.tj.gohome.vo.responseVO;
 
-import com.hj.tj.gohome.vo.requestVo.OwnerInsertReqObj;
 import com.hj.tj.gohome.vo.requestVo.OwnerResObj;
 
 import java.util.Date;
@@ -51,6 +50,11 @@ public class OrderResObj {
      * 收益
      */
     private Double profit;
+
+    /**
+     * 服务费=价格-收益
+     */
+    private Double servicePrice;
 
     /**
      * 抢票人员
@@ -226,5 +230,13 @@ public class OrderResObj {
 
     public void setPortalUserId(Integer portalUserId) {
         this.portalUserId = portalUserId;
+    }
+
+    public Double getServicePrice() {
+        return servicePrice;
+    }
+
+    public void setServicePrice(Double servicePrice) {
+        this.servicePrice = servicePrice;
     }
 }

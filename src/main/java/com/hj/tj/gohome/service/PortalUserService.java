@@ -2,6 +2,9 @@ package com.hj.tj.gohome.service;
 
 import com.hj.tj.gohome.entity.PortalUser;
 import com.hj.tj.gohome.vo.responseVO.LoginResObj;
+import com.hj.tj.gohome.vo.responseVO.PortalUserResObj;
+
+import java.util.List;
 
 /**
  * @author tangj
@@ -26,5 +29,12 @@ public interface PortalUserService {
      * @return
      */
     LoginResObj login(String account, String password);
+
+    /**
+     * 获取用户列表
+     *
+     * @return
+     */
+    List<PortalUserResObj> listPortalUserResObj();
 
 }
