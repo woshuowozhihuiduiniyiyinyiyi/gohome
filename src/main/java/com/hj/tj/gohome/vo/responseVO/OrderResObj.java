@@ -52,6 +52,11 @@ public class OrderResObj {
     private Double profit;
 
     /**
+     * 收益
+     */
+    private Double robbingPrice;
+
+    /**
      * 服务费=价格-收益
      */
     private Double servicePrice;
@@ -238,5 +243,13 @@ public class OrderResObj {
 
     public void setServicePrice(Double servicePrice) {
         this.servicePrice = servicePrice;
+    }
+
+    public Double getRobbingPrice() {
+        return robbingPrice;
+    }
+
+    public void setRobbingPrice(Double robbingPrice) {
+        this.robbingPrice = robbingPrice;
     }
 }

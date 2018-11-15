@@ -245,9 +245,13 @@ public class OrderServiceImpl implements OrderService {
 
         orderStatisticDataResObj.setSuccessCount(successCount);
 
-        int totalProfit = orderMapper.getTotalProfit(statusList);
+        Integer totalProfit = orderMapper.getTotalProfit(statusList);
 
-        orderStatisticDataResObj.setTotalProfit(totalProfit / 100.0);
+        if (Objects.isNull(totalProfit)) {
+            orderStatisticDataResObj.setTotalProfit(0.0);
+        } else {
+            orderStatisticDataResObj.setTotalProfit(totalProfit / 100.0);
+        }
 
         return orderStatisticDataResObj;
     }
@@ -459,8 +463,11 @@ public class OrderServiceImpl implements OrderService {
         orderResObj.setPrice(order.getPrice() / 100.0);
         orderResObj.setProfit(order.getProfit() / 100.0);
         orderResObj.setServicePrice((order.getPrice() - order.getProfit()) / 100.0);
-        orderResObj.setRobbingTicketUserId(order.getPortalUserId());
+        orderResObj.setRobbingTicketUserId(order.getRobbingTicketUserId());
         orderResObj.setPortalUserId(order.getPortalUserId());
+        if (!Objects.equals(order.getProfit(), 0)) {
+            orderResObj.setRobbingPrice((order.getPrice() - order.getProfit()) / 100.0);
+        }
 
         orderResObj.setStatus(order.getStatus().intValue());
         OrderStatusEnum orderStatusEnum = OrderStatusEnum.getOrderStatusEnumByValue(order.getStatus());

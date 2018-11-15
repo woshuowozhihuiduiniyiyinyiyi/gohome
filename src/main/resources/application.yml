@@ -1,7 +1,7 @@
 #默认使用配置
 spring:
   profiles:
-    active: dev
+    active: prod
   application:
     name: gohome
 
@@ -35,7 +35,7 @@ spring:
   profiles: prod
 
   datasource:
-    url: jdbc:mysql://cdb-cpg22u4j.gz.tencentcdb.com:10017/gohome
+    url: jdbc:mysql://cdb-96qh7ip0.cd.tencentcdb.com:10022/gohome
     username: root
     password: huijia931
     driver-class-name: com.mysql.jdbc.Driver

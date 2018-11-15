@@ -30,5 +30,5 @@ public interface OrderMapper {
     int updateByPrimaryKey(Order record);
 
     // 查询总收益
-    int getTotalProfit(List<Byte> statusList);
+    Integer getTotalProfit(List<Byte> statusList);
 }
