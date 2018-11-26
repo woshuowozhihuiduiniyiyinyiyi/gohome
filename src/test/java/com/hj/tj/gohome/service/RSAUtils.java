@@ -6,6 +6,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,13 +33,16 @@ public class RSAUtils {
 
             System.out.println(privateKey);
 
-            String str = "fdsafdasggeggsdvxvbhryreytrhhtf";
+            String str = "o-UqG1YpvCnCEZZRl0vB5ZH4OIx0";
+
             byte[] bytes = publicEncrypt(str.getBytes(), string2PublicKey(publicKey));
 
             System.out.println("加密后：");
-            System.out.println(new String(bytes));
 
-            byte[] bytes1 = privateDecrypt(bytes, string2PrivateKey(privateKey));
+            String encodeStr = new String(Base64.getEncoder().encode(bytes));
+            System.out.println(encodeStr);
+
+            byte[] bytes1 = privateDecrypt(Base64.getDecoder().decode(encodeStr), string2PrivateKey(privateKey));
 
             String decodeStr = new String(bytes1);
 
