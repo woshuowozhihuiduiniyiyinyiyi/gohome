@@ -5,9 +5,13 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="id_card" property="idCard" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="id_card_type" property="idCardType" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
     <result column="status" property="status" jdbcType="TINYINT" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
     <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,7 +72,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, id_card, name, status, created_at, updated_at
+    id, id_card, name, id_card_type, type, status, created_at, updated_at, creator, updater
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hj.tj.gohome.entity.PassengerExample" >
     select
@@ -86,7 +90,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from passenger
     where id = #{id,jdbcType=INTEGER}
@@ -102,14 +106,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.hj.tj.gohome.entity.Passenger" >
-    insert into passenger (id, id_card, name, 
-      status, created_at, updated_at
-      )
-    values (#{id,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{status,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
-      )
+    insert into passenger (id, id_card, name,
+    id_card_type, type, status,
+    created_at, updated_at, creator,
+    updater)
+    values (#{id,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+    #{idCardType,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, #{status,jdbcType=TINYINT},
+    #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR},
+    #{updater,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.Passenger" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.Passenger" >
     insert into passenger
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -121,6 +127,12 @@
       <if test="name != null" >
         name,
       </if>
+      <if test="idCardType != null" >
+        id_card_type,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
       <if test="status != null" >
         status,
       </if>
@@ -129,6 +141,12 @@
       </if>
       <if test="updatedAt != null" >
         updated_at,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="updater != null" >
+        updater,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -141,6 +159,12 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="idCardType != null" >
+        #{idCardType,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
       <if test="status != null" >
         #{status,jdbcType=TINYINT},
       </if>
@@ -149,6 +173,12 @@
       </if>
       <if test="updatedAt != null" >
         #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -170,6 +200,12 @@
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
       </if>
+      <if test="record.idCardType != null" >
+        id_card_type = #{record.idCardType,jdbcType=TINYINT},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=TINYINT},
       </if>
@@ -179,6 +215,12 @@
       <if test="record.updatedAt != null" >
         updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updater != null" >
+        updater = #{record.updater,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -187,11 +229,15 @@
   <update id="updateByExample" parameterType="map" >
     update passenger
     set id = #{record.id,jdbcType=INTEGER},
-      id_card = #{record.idCard,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=TINYINT},
-      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
+    id_card = #{record.idCard,jdbcType=VARCHAR},
+    name = #{record.name,jdbcType=VARCHAR},
+    id_card_type = #{record.idCardType,jdbcType=TINYINT},
+    type = #{record.type,jdbcType=TINYINT},
+    status = #{record.status,jdbcType=TINYINT},
+    created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+    updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+    creator = #{record.creator,jdbcType=VARCHAR},
+    updater = #{record.updater,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -205,6 +251,12 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="idCardType != null" >
+        id_card_type = #{idCardType,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
       <if test="status != null" >
         status = #{status,jdbcType=TINYINT},
       </if>
@@ -214,6 +266,12 @@
       <if test="updatedAt != null" >
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -221,9 +279,13 @@
     update passenger
     set id_card = #{idCard,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
+      id_card_type = #{idCardType,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
       status = #{status,jdbcType=TINYINT},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

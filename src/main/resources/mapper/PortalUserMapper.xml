@@ -13,6 +13,8 @@
     <result column="status" property="status" jdbcType="TINYINT" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
     <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, name, gender, account, password, phone, sid, sid_expire, status, created_at, 
-    updated_at
+    id, name, gender, account, password, phone, sid, sid_expire, status, created_at,
+    updated_at, creator, updater
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hj.tj.gohome.entity.PortalUserExample" >
     select
@@ -92,7 +94,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from portal_user
     where id = #{id,jdbcType=INTEGER}
@@ -108,14 +110,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.hj.tj.gohome.entity.PortalUser" >
-    insert into portal_user (id, name, gender, 
-      account, password, phone, 
-      sid, sid_expire, status, 
-      created_at, updated_at)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, 
-      #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{sid,jdbcType=VARCHAR}, #{sidExpire,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
-      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
+    insert into portal_user (id, name, gender,
+    account, password, phone,
+    sid, sid_expire, status,
+    created_at, updated_at, creator,
+    updater)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT},
+    #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+    #{sid,jdbcType=VARCHAR}, #{sidExpire,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT},
+    #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR},
+    #{updater,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.PortalUser" >
     insert into portal_user
@@ -153,6 +157,12 @@
       <if test="updatedAt != null" >
         updated_at,
       </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -187,6 +197,12 @@
       </if>
       <if test="updatedAt != null" >
         #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -232,6 +248,12 @@
       <if test="record.updatedAt != null" >
         updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updater != null" >
+        updater = #{record.updater,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -240,16 +262,18 @@
   <update id="updateByExample" parameterType="map" >
     update portal_user
     set id = #{record.id,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
-      gender = #{record.gender,jdbcType=TINYINT},
-      account = #{record.account,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      sid = #{record.sid,jdbcType=VARCHAR},
-      sid_expire = #{record.sidExpire,jdbcType=TIMESTAMP},
-      status = #{record.status,jdbcType=TINYINT},
-      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
+    name = #{record.name,jdbcType=VARCHAR},
+    gender = #{record.gender,jdbcType=TINYINT},
+    account = #{record.account,jdbcType=VARCHAR},
+    password = #{record.password,jdbcType=VARCHAR},
+    phone = #{record.phone,jdbcType=VARCHAR},
+    sid = #{record.sid,jdbcType=VARCHAR},
+    sid_expire = #{record.sidExpire,jdbcType=TIMESTAMP},
+    status = #{record.status,jdbcType=TINYINT},
+    created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+    updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+    creator = #{record.creator,jdbcType=VARCHAR},
+    updater = #{record.updater,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -287,6 +311,12 @@
       <if test="updatedAt != null" >
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -301,7 +331,9 @@
       sid_expire = #{sidExpire,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=TINYINT},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

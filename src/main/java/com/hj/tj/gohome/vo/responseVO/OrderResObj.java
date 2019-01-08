@@ -17,6 +17,11 @@ public class OrderResObj {
     private String departureDateStr;
 
     /**
+     * 用户期待出发时间
+     */
+    private String expectDate;
+
+    /**
      * 出发地
      */
     private String origin;
@@ -84,6 +89,14 @@ public class OrderResObj {
      */
     private Date createdAt;
     private String createdAtStr;
+
+    public String getExpectDate() {
+        return expectDate;
+    }
+
+    public void setExpectDate(String expectDate) {
+        this.expectDate = expectDate;
+    }
 
     public Integer getId() {
         return id;

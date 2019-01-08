@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.hj.tj.gohome.mapper.OwnerMapper" >
-  <resultMap id="BaseResultMap" type="com.hj.tj.gohome.entity.Owner" >
+<mapper namespace="com.hj.tj.gohome.mapper.RelOwnerPassengerMapper" >
+  <resultMap id="BaseResultMap" type="com.hj.tj.gohome.entity.RelOwnerPassenger" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="wx_account" property="wxAccount" jdbcType="VARCHAR" />
-    <result column="wx_nickname" property="wxNickname" jdbcType="VARCHAR" />
-    <result column="province" property="province" jdbcType="VARCHAR" />
-    <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
-    <result column="open_id" property="openId" jdbcType="VARCHAR" />
-    <result column="gender" property="gender" jdbcType="TINYINT" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="owner_id" property="ownerId" jdbcType="INTEGER" />
+    <result column="passenger_id" property="passengerId" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="TINYINT" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
     <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
@@ -76,17 +70,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, wx_account, wx_nickname, province, city, avatar_url, open_id, gender, phone,
-    status, created_at, updated_at, creator, updater
+    id, owner_id, passenger_id, status, created_at, updated_at, creator, updater
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hj.tj.gohome.entity.OwnerExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hj.tj.gohome.entity.RelOwnerPassengerExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from owner
+    from rel_owner_passenger
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,62 +88,40 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
+    select 
     <include refid="Base_Column_List" />
-    from owner
+    from rel_owner_passenger
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from owner
+    delete from rel_owner_passenger
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.hj.tj.gohome.entity.OwnerExample" >
-    delete from owner
+  <delete id="deleteByExample" parameterType="com.hj.tj.gohome.entity.RelOwnerPassengerExample" >
+    delete from rel_owner_passenger
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hj.tj.gohome.entity.Owner" >
-    insert into owner (id, wx_account, wx_nickname,
-    province, city, avatar_url,
-    open_id, gender, phone,
-    status, created_at, updated_at,
-    creator, updater)
-    values (#{id,jdbcType=INTEGER}, #{wxAccount,jdbcType=VARCHAR}, #{wxNickname,jdbcType=VARCHAR},
-    #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR},
-    #{openId,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{phone,jdbcType=VARCHAR},
-    #{status,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
-    #{creator,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.hj.tj.gohome.entity.RelOwnerPassenger" >
+    insert into rel_owner_passenger (id, owner_id, passenger_id, 
+      status, created_at, updated_at, 
+      creator, updater)
+    values (#{id,jdbcType=INTEGER}, #{ownerId,jdbcType=INTEGER}, #{passengerId,jdbcType=INTEGER}, 
+      #{status,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.Owner" >
-    insert into owner
+  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.RelOwnerPassenger" >
+    insert into rel_owner_passenger
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="wxAccount != null" >
-        wx_account,
+      <if test="ownerId != null" >
+        owner_id,
       </if>
-      <if test="wxNickname != null" >
-        wx_nickname,
-      </if>
-      <if test="province != null" >
-        province,
-      </if>
-      <if test="city != null" >
-        city,
-      </if>
-      <if test="avatarUrl != null" >
-        avatar_url,
-      </if>
-      <if test="openId != null" >
-        open_id,
-      </if>
-      <if test="gender != null" >
-        gender,
-      </if>
-      <if test="phone != null" >
-        phone,
+      <if test="passengerId != null" >
+        passenger_id,
       </if>
       <if test="status != null" >
         status,
@@ -172,29 +143,11 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="wxAccount != null" >
-        #{wxAccount,jdbcType=VARCHAR},
+      <if test="ownerId != null" >
+        #{ownerId,jdbcType=INTEGER},
       </if>
-      <if test="wxNickname != null" >
-        #{wxNickname,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null" >
-        #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="city != null" >
-        #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarUrl != null" >
-        #{avatarUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="openId != null" >
-        #{openId,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null" >
-        #{gender,jdbcType=TINYINT},
-      </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
+      <if test="passengerId != null" >
+        #{passengerId,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         #{status,jdbcType=TINYINT},
@@ -213,41 +166,23 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hj.tj.gohome.entity.OwnerExample" resultType="java.lang.Integer" >
-    select count(*) from owner
+  <select id="countByExample" parameterType="com.hj.tj.gohome.entity.RelOwnerPassengerExample" resultType="java.lang.Integer" >
+    select count(*) from rel_owner_passenger
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update owner
+    update rel_owner_passenger
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.wxAccount != null" >
-        wx_account = #{record.wxAccount,jdbcType=VARCHAR},
+      <if test="record.ownerId != null" >
+        owner_id = #{record.ownerId,jdbcType=INTEGER},
       </if>
-      <if test="record.wxNickname != null" >
-        wx_nickname = #{record.wxNickname,jdbcType=VARCHAR},
-      </if>
-      <if test="record.province != null" >
-        province = #{record.province,jdbcType=VARCHAR},
-      </if>
-      <if test="record.city != null" >
-        city = #{record.city,jdbcType=VARCHAR},
-      </if>
-      <if test="record.avatarUrl != null" >
-        avatar_url = #{record.avatarUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="record.openId != null" >
-        open_id = #{record.openId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.gender != null" >
-        gender = #{record.gender,jdbcType=TINYINT},
-      </if>
-      <if test="record.phone != null" >
-        phone = #{record.phone,jdbcType=VARCHAR},
+      <if test="record.passengerId != null" >
+        passenger_id = #{record.passengerId,jdbcType=INTEGER},
       </if>
       <if test="record.status != null" >
         status = #{record.status,jdbcType=TINYINT},
@@ -270,51 +205,27 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update owner
+    update rel_owner_passenger
     set id = #{record.id,jdbcType=INTEGER},
-    wx_account = #{record.wxAccount,jdbcType=VARCHAR},
-    wx_nickname = #{record.wxNickname,jdbcType=VARCHAR},
-    province = #{record.province,jdbcType=VARCHAR},
-    city = #{record.city,jdbcType=VARCHAR},
-    avatar_url = #{record.avatarUrl,jdbcType=VARCHAR},
-    open_id = #{record.openId,jdbcType=VARCHAR},
-    gender = #{record.gender,jdbcType=TINYINT},
-    phone = #{record.phone,jdbcType=VARCHAR},
-    status = #{record.status,jdbcType=TINYINT},
-    created_at = #{record.createdAt,jdbcType=TIMESTAMP},
-    updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
-    creator = #{record.creator,jdbcType=VARCHAR},
-    updater = #{record.updater,jdbcType=VARCHAR}
+      owner_id = #{record.ownerId,jdbcType=INTEGER},
+      passenger_id = #{record.passengerId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      updater = #{record.updater,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.hj.tj.gohome.entity.Owner" >
-    update owner
+  <update id="updateByPrimaryKeySelective" parameterType="com.hj.tj.gohome.entity.RelOwnerPassenger" >
+    update rel_owner_passenger
     <set >
-      <if test="wxAccount != null" >
-        wx_account = #{wxAccount,jdbcType=VARCHAR},
+      <if test="ownerId != null" >
+        owner_id = #{ownerId,jdbcType=INTEGER},
       </if>
-      <if test="wxNickname != null" >
-        wx_nickname = #{wxNickname,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null" >
-        province = #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="city != null" >
-        city = #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="avatarUrl != null" >
-        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="openId != null" >
-        open_id = #{openId,jdbcType=VARCHAR},
-      </if>
-      <if test="gender != null" >
-        gender = #{gender,jdbcType=TINYINT},
-      </if>
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=VARCHAR},
+      <if test="passengerId != null" >
+        passenger_id = #{passengerId,jdbcType=INTEGER},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=TINYINT},
@@ -334,16 +245,10 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.hj.tj.gohome.entity.Owner" >
-    update owner
-    set wx_account = #{wxAccount,jdbcType=VARCHAR},
-      wx_nickname = #{wxNickname,jdbcType=VARCHAR},
-      province = #{province,jdbcType=VARCHAR},
-      city = #{city,jdbcType=VARCHAR},
-      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
-      open_id = #{openId,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=TINYINT},
-      phone = #{phone,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.hj.tj.gohome.entity.RelOwnerPassenger" >
+    update rel_owner_passenger
+    set owner_id = #{ownerId,jdbcType=INTEGER},
+      passenger_id = #{passengerId,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},

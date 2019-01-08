@@ -9,6 +9,8 @@ public class Order {
 
     private String destination;
 
+    private String expectDate;
+
     private Date departureDate;
 
     private String trainNumber;
@@ -27,9 +29,17 @@ public class Order {
 
     private Integer robbingTicketUserId;
 
+    private String phone;
+
+    private String canBuyTicketLater;
+
     private Byte status;
 
+    private String creator;
+
     private Date createdAt;
+
+    private String updater;
 
     private Date updatedAt;
 
@@ -55,6 +65,14 @@ public class Order {
 
     public void setDestination(String destination) {
         this.destination = destination == null ? null : destination.trim();
+    }
+
+    public String getExpectDate() {
+        return expectDate;
+    }
+
+    public void setExpectDate(String expectDate) {
+        this.expectDate = expectDate == null ? null : expectDate.trim();
     }
 
     public Date getDepartureDate() {
@@ -129,6 +147,22 @@ public class Order {
         this.robbingTicketUserId = robbingTicketUserId;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getCanBuyTicketLater() {
+        return canBuyTicketLater;
+    }
+
+    public void setCanBuyTicketLater(String canBuyTicketLater) {
+        this.canBuyTicketLater = canBuyTicketLater == null ? null : canBuyTicketLater.trim();
+    }
+
     public Byte getStatus() {
         return status;
     }
@@ -137,12 +171,28 @@ public class Order {
         this.status = status;
     }
 
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator == null ? null : creator.trim();
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater == null ? null : updater.trim();
     }
 
     public Date getUpdatedAt() {

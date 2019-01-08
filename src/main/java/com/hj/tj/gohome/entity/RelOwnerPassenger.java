@@ -2,14 +2,12 @@ package com.hj.tj.gohome.entity;
 
 import java.util.Date;
 
-public class RobbingTicketUser {
+public class RelOwnerPassenger {
     private Integer id;
 
-    private String name;
+    private Integer ownerId;
 
-    private Byte gender;
-
-    private String phone;
+    private Integer passengerId;
 
     private Byte status;
 
@@ -29,28 +27,20 @@ public class RobbingTicketUser {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getOwnerId() {
+        return ownerId;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public Byte getGender() {
-        return gender;
+    public Integer getPassengerId() {
+        return passengerId;
     }
 
-    public void setGender(Byte gender) {
-        this.gender = gender;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+    public void setPassengerId(Integer passengerId) {
+        this.passengerId = passengerId;
     }
 
     public Byte getStatus() {

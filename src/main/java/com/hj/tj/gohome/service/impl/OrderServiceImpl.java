@@ -465,6 +465,8 @@ public class OrderServiceImpl implements OrderService {
         orderResObj.setServicePrice((order.getPrice() - order.getProfit()) / 100.0);
         orderResObj.setRobbingTicketUserId(order.getRobbingTicketUserId());
         orderResObj.setPortalUserId(order.getPortalUserId());
+        orderResObj.setExpectDate(order.getExpectDate());
+
         if (!Objects.equals(order.getProfit(), 0)) {
             orderResObj.setRobbingPrice((order.getPrice() - order.getProfit()) / 100.0);
         }

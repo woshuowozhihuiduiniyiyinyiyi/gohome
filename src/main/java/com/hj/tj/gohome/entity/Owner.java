@@ -9,6 +9,14 @@ public class Owner {
 
     private String wxNickname;
 
+    private String province;
+
+    private String city;
+
+    private String avatarUrl;
+
+    private String openId;
+
     private Byte gender;
 
     private String phone;
@@ -18,6 +26,10 @@ public class Owner {
     private Date createdAt;
 
     private Date updatedAt;
+
+    private String creator;
+
+    private String updater;
 
     public Integer getId() {
         return id;
@@ -41,6 +53,38 @@ public class Owner {
 
     public void setWxNickname(String wxNickname) {
         this.wxNickname = wxNickname == null ? null : wxNickname.trim();
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province == null ? null : province.trim();
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city == null ? null : city.trim();
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl == null ? null : avatarUrl.trim();
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
     }
 
     public Byte getGender() {
@@ -81,5 +125,21 @@ public class Owner {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator == null ? null : creator.trim();
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater == null ? null : updater.trim();
     }
 }

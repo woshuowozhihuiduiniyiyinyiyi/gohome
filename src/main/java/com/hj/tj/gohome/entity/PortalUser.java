@@ -25,6 +25,10 @@ public class PortalUser {
 
     private Date updatedAt;
 
+    private String creator;
+
+    private String updater;
+
     public Integer getId() {
         return id;
     }
@@ -111,5 +115,21 @@ public class PortalUser {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator == null ? null : creator.trim();
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater == null ? null : updater.trim();
     }
 }

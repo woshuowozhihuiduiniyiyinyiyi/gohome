@@ -9,11 +9,19 @@ public class Passenger {
 
     private String name;
 
+    private Byte idCardType;
+
+    private Byte type;
+
     private Byte status;
 
     private Date createdAt;
 
     private Date updatedAt;
+
+    private String creator;
+
+    private String updater;
 
     public Integer getId() {
         return id;
@@ -39,6 +47,22 @@ public class Passenger {
         this.name = name == null ? null : name.trim();
     }
 
+    public Byte getIdCardType() {
+        return idCardType;
+    }
+
+    public void setIdCardType(Byte idCardType) {
+        this.idCardType = idCardType;
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
     public Byte getStatus() {
         return status;
     }
@@ -61,5 +85,21 @@ public class Passenger {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator == null ? null : creator.trim();
+    }
+
+    public String getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(String updater) {
+        this.updater = updater == null ? null : updater.trim();
     }
 }

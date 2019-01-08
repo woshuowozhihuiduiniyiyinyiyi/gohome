@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PassengerExample {
+public class RelOwnerPassengerExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public PassengerExample() {
+    public RelOwnerPassengerExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -165,263 +165,123 @@ public class PassengerExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdCardIsNull() {
-            addCriterion("id_card is null");
+        public Criteria andOwnerIdIsNull() {
+            addCriterion("owner_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardIsNotNull() {
-            addCriterion("id_card is not null");
+        public Criteria andOwnerIdIsNotNull() {
+            addCriterion("owner_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardEqualTo(String value) {
-            addCriterion("id_card =", value, "idCard");
+        public Criteria andOwnerIdEqualTo(Integer value) {
+            addCriterion("owner_id =", value, "ownerId");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardNotEqualTo(String value) {
-            addCriterion("id_card <>", value, "idCard");
+        public Criteria andOwnerIdNotEqualTo(Integer value) {
+            addCriterion("owner_id <>", value, "ownerId");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardGreaterThan(String value) {
-            addCriterion("id_card >", value, "idCard");
+        public Criteria andOwnerIdGreaterThan(Integer value) {
+            addCriterion("owner_id >", value, "ownerId");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardGreaterThanOrEqualTo(String value) {
-            addCriterion("id_card >=", value, "idCard");
+        public Criteria andOwnerIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("owner_id >=", value, "ownerId");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardLessThan(String value) {
-            addCriterion("id_card <", value, "idCard");
+        public Criteria andOwnerIdLessThan(Integer value) {
+            addCriterion("owner_id <", value, "ownerId");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardLessThanOrEqualTo(String value) {
-            addCriterion("id_card <=", value, "idCard");
+        public Criteria andOwnerIdLessThanOrEqualTo(Integer value) {
+            addCriterion("owner_id <=", value, "ownerId");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardLike(String value) {
-            addCriterion("id_card like", value, "idCard");
+        public Criteria andOwnerIdIn(List<Integer> values) {
+            addCriterion("owner_id in", values, "ownerId");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardNotLike(String value) {
-            addCriterion("id_card not like", value, "idCard");
+        public Criteria andOwnerIdNotIn(List<Integer> values) {
+            addCriterion("owner_id not in", values, "ownerId");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardIn(List<String> values) {
-            addCriterion("id_card in", values, "idCard");
+        public Criteria andOwnerIdBetween(Integer value1, Integer value2) {
+            addCriterion("owner_id between", value1, value2, "ownerId");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardNotIn(List<String> values) {
-            addCriterion("id_card not in", values, "idCard");
+        public Criteria andOwnerIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("owner_id not between", value1, value2, "ownerId");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardBetween(String value1, String value2) {
-            addCriterion("id_card between", value1, value2, "idCard");
+        public Criteria andPassengerIdIsNull() {
+            addCriterion("passenger_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andIdCardNotBetween(String value1, String value2) {
-            addCriterion("id_card not between", value1, value2, "idCard");
+        public Criteria andPassengerIdIsNotNull() {
+            addCriterion("passenger_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andNameIsNull() {
-            addCriterion("name is null");
+        public Criteria andPassengerIdEqualTo(Integer value) {
+            addCriterion("passenger_id =", value, "passengerId");
             return (Criteria) this;
         }
 
-        public Criteria andNameIsNotNull() {
-            addCriterion("name is not null");
+        public Criteria andPassengerIdNotEqualTo(Integer value) {
+            addCriterion("passenger_id <>", value, "passengerId");
             return (Criteria) this;
         }
 
-        public Criteria andNameEqualTo(String value) {
-            addCriterion("name =", value, "name");
+        public Criteria andPassengerIdGreaterThan(Integer value) {
+            addCriterion("passenger_id >", value, "passengerId");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotEqualTo(String value) {
-            addCriterion("name <>", value, "name");
+        public Criteria andPassengerIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("passenger_id >=", value, "passengerId");
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThan(String value) {
-            addCriterion("name >", value, "name");
+        public Criteria andPassengerIdLessThan(Integer value) {
+            addCriterion("passenger_id <", value, "passengerId");
             return (Criteria) this;
         }
 
-        public Criteria andNameGreaterThanOrEqualTo(String value) {
-            addCriterion("name >=", value, "name");
+        public Criteria andPassengerIdLessThanOrEqualTo(Integer value) {
+            addCriterion("passenger_id <=", value, "passengerId");
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThan(String value) {
-            addCriterion("name <", value, "name");
+        public Criteria andPassengerIdIn(List<Integer> values) {
+            addCriterion("passenger_id in", values, "passengerId");
             return (Criteria) this;
         }
 
-        public Criteria andNameLessThanOrEqualTo(String value) {
-            addCriterion("name <=", value, "name");
+        public Criteria andPassengerIdNotIn(List<Integer> values) {
+            addCriterion("passenger_id not in", values, "passengerId");
             return (Criteria) this;
         }
 
-        public Criteria andNameLike(String value) {
-            addCriterion("name like", value, "name");
+        public Criteria andPassengerIdBetween(Integer value1, Integer value2) {
+            addCriterion("passenger_id between", value1, value2, "passengerId");
             return (Criteria) this;
         }
 
-        public Criteria andNameNotLike(String value) {
-            addCriterion("name not like", value, "name");
-            return (Criteria) this;
-        }
-
-        public Criteria andNameIn(List<String> values) {
-            addCriterion("name in", values, "name");
-            return (Criteria) this;
-        }
-
-        public Criteria andNameNotIn(List<String> values) {
-            addCriterion("name not in", values, "name");
-            return (Criteria) this;
-        }
-
-        public Criteria andNameBetween(String value1, String value2) {
-            addCriterion("name between", value1, value2, "name");
-            return (Criteria) this;
-        }
-
-        public Criteria andNameNotBetween(String value1, String value2) {
-            addCriterion("name not between", value1, value2, "name");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdCardTypeIsNull() {
-            addCriterion("id_card_type is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdCardTypeIsNotNull() {
-            addCriterion("id_card_type is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdCardTypeEqualTo(Byte value) {
-            addCriterion("id_card_type =", value, "idCardType");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdCardTypeNotEqualTo(Byte value) {
-            addCriterion("id_card_type <>", value, "idCardType");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdCardTypeGreaterThan(Byte value) {
-            addCriterion("id_card_type >", value, "idCardType");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdCardTypeGreaterThanOrEqualTo(Byte value) {
-            addCriterion("id_card_type >=", value, "idCardType");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdCardTypeLessThan(Byte value) {
-            addCriterion("id_card_type <", value, "idCardType");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdCardTypeLessThanOrEqualTo(Byte value) {
-            addCriterion("id_card_type <=", value, "idCardType");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdCardTypeIn(List<Byte> values) {
-            addCriterion("id_card_type in", values, "idCardType");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdCardTypeNotIn(List<Byte> values) {
-            addCriterion("id_card_type not in", values, "idCardType");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdCardTypeBetween(Byte value1, Byte value2) {
-            addCriterion("id_card_type between", value1, value2, "idCardType");
-            return (Criteria) this;
-        }
-
-        public Criteria andIdCardTypeNotBetween(Byte value1, Byte value2) {
-            addCriterion("id_card_type not between", value1, value2, "idCardType");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIsNull() {
-            addCriterion("type is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIsNotNull() {
-            addCriterion("type is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeEqualTo(Byte value) {
-            addCriterion("type =", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotEqualTo(Byte value) {
-            addCriterion("type <>", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThan(Byte value) {
-            addCriterion("type >", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeGreaterThanOrEqualTo(Byte value) {
-            addCriterion("type >=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThan(Byte value) {
-            addCriterion("type <", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeLessThanOrEqualTo(Byte value) {
-            addCriterion("type <=", value, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeIn(List<Byte> values) {
-            addCriterion("type in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotIn(List<Byte> values) {
-            addCriterion("type not in", values, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeBetween(Byte value1, Byte value2) {
-            addCriterion("type between", value1, value2, "type");
-            return (Criteria) this;
-        }
-
-        public Criteria andTypeNotBetween(Byte value1, Byte value2) {
-            addCriterion("type not between", value1, value2, "type");
+        public Criteria andPassengerIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("passenger_id not between", value1, value2, "passengerId");
             return (Criteria) this;
         }
 

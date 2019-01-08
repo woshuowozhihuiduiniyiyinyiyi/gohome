@@ -8,6 +8,8 @@
     <result column="status" property="status" jdbcType="TINYINT" />
     <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
     <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -68,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, passenger_id, order_id, status, created_at, updated_at
+    id, passenger_id, order_id, status, created_at, updated_at, creator, updater
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.hj.tj.gohome.entity.RelPassengerOrderExample" >
     select
@@ -86,7 +88,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from rel_passenger_order
     where id = #{id,jdbcType=INTEGER}
@@ -102,12 +104,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.hj.tj.gohome.entity.RelPassengerOrder" >
-    insert into rel_passenger_order (id, passenger_id, order_id, 
-      status, created_at, updated_at
-      )
-    values (#{id,jdbcType=INTEGER}, #{passengerId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, 
-      #{status,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
-      )
+    insert into rel_passenger_order (id, passenger_id, order_id,
+    status, created_at, updated_at,
+    creator, updater)
+    values (#{id,jdbcType=INTEGER}, #{passengerId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER},
+    #{status,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
+    #{creator,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.RelPassengerOrder" >
     insert into rel_passenger_order
@@ -130,6 +132,12 @@
       <if test="updatedAt != null" >
         updated_at,
       </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -149,6 +157,12 @@
       </if>
       <if test="updatedAt != null" >
         #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -179,6 +193,12 @@
       <if test="record.updatedAt != null" >
         updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updater != null" >
+        updater = #{record.updater,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -187,11 +207,13 @@
   <update id="updateByExample" parameterType="map" >
     update rel_passenger_order
     set id = #{record.id,jdbcType=INTEGER},
-      passenger_id = #{record.passengerId,jdbcType=INTEGER},
-      order_id = #{record.orderId,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=TINYINT},
-      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
+    passenger_id = #{record.passengerId,jdbcType=INTEGER},
+    order_id = #{record.orderId,jdbcType=INTEGER},
+    status = #{record.status,jdbcType=TINYINT},
+    created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+    updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+    creator = #{record.creator,jdbcType=VARCHAR},
+    updater = #{record.updater,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -214,6 +236,12 @@
       <if test="updatedAt != null" >
         updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -223,7 +251,9 @@
       order_id = #{orderId,jdbcType=INTEGER},
       status = #{status,jdbcType=TINYINT},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
-      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
