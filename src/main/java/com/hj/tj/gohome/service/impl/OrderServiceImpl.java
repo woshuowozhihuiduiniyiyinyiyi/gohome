@@ -493,9 +493,9 @@ public class OrderServiceImpl implements OrderService {
 
 
         OwnerResObj ownerResObj = new OwnerResObj();
-        ownerResObj.setPhone("");
         ownerResObj.setWxAccount("");
         ownerResObj.setWxNickname("");
+        ownerResObj.setPhone(order.getPhone());
         if (Objects.nonNull(ownerMap.get(order.getOwnerId()))) {
             Owner owner = ownerMap.get(order.getOwnerId());
             ownerResObj.setWxAccount(owner.getWxAccount());
@@ -503,6 +503,10 @@ public class OrderServiceImpl implements OrderService {
             ownerResObj.setPhone(owner.getPhone());
             ownerResObj.setId(owner.getId());
         }
+        if (StringUtil.isNotBlank(order.getPhone())) {
+            ownerResObj.setPhone(order.getPhone());
+        }
+
         orderResObj.setOwnerInfo(ownerResObj);
 
         orderResObj.setRobbingTicketUserName("");

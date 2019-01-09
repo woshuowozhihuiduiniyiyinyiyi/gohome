@@ -105,7 +105,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hj.tj.gohome.entity.Passenger" >
+  <insert id="insert" parameterType="com.hj.tj.gohome.entity.Passenger" useGeneratedKeys="true" keyProperty="id">
     insert into passenger (id, id_card, name,
     id_card_type, type, status,
     created_at, updated_at, creator,
@@ -115,7 +115,7 @@
     #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR},
     #{updater,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.Passenger" >
+  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.Passenger" useGeneratedKeys="true" keyProperty="id">
     insert into passenger
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

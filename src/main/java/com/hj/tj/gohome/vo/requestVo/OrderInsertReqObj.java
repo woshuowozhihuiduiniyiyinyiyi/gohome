@@ -26,6 +26,11 @@ public class OrderInsertReqObj {
     private String destination;
 
     /**
+     * 用户期望出发日期
+     */
+    private String expectDate;
+
+    /**
      * 出发日期
      */
     private Date departureDate;
@@ -69,6 +74,14 @@ public class OrderInsertReqObj {
      * 抢票价格
      */
     private Double robbingPrice;
+
+    public String getExpectDate() {
+        return expectDate;
+    }
+
+    public void setExpectDate(String expectDate) {
+        this.expectDate = expectDate;
+    }
 
     public Integer getId() {
         return id;

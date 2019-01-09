@@ -110,7 +110,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hj.tj.gohome.entity.Owner" >
+  <insert id="insert" parameterType="com.hj.tj.gohome.entity.Owner" useGeneratedKeys="true" keyProperty="id">
     insert into owner (id, wx_account, wx_nickname,
     province, city, avatar_url,
     open_id, gender, phone,
@@ -122,7 +122,7 @@
     #{status,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
     #{creator,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.Owner" >
+  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.Owner" useGeneratedKeys="true" keyProperty="id">
     insert into owner
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

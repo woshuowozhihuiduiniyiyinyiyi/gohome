@@ -109,7 +109,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hj.tj.gohome.entity.PortalUser" >
+  <insert id="insert" parameterType="com.hj.tj.gohome.entity.PortalUser" useGeneratedKeys="true" keyProperty="id">
     insert into portal_user (id, name, gender,
     account, password, phone,
     sid, sid_expire, status,
@@ -121,7 +121,7 @@
     #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR},
     #{updater,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.PortalUser" >
+  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.PortalUser" useGeneratedKeys="true" keyProperty="id">
     insert into portal_user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

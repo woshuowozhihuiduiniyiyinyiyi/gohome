@@ -103,7 +103,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hj.tj.gohome.entity.RelPassengerOrder" >
+  <insert id="insert" parameterType="com.hj.tj.gohome.entity.RelPassengerOrder" useGeneratedKeys="true" keyProperty="id">
     insert into rel_passenger_order (id, passenger_id, order_id,
     status, created_at, updated_at,
     creator, updater)
@@ -111,7 +111,7 @@
     #{status,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
     #{creator,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.RelPassengerOrder" >
+  <insert id="insertSelective" parameterType="com.hj.tj.gohome.entity.RelPassengerOrder" useGeneratedKeys="true" keyProperty="id">
     insert into rel_passenger_order
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
