@@ -108,14 +108,6 @@ public class OrderController {
         }
 
         OwnerInsertReqObj ownerInfo = orderInsertReqObj.getOwnerInfo();
-        if (StringUtil.isBlank(ownerInfo.getWxAccount())) {
-            throw new CustomException(ErrorMsgEnum.OWNER_WX_ACCOUNT_IS_NULL);
-        }
-
-        if (StringUtil.isBlank(ownerInfo.getWxNickname())) {
-            throw new CustomException(ErrorMsgEnum.OWNER_WX_NICKNAME_IS_NULL);
-        }
-
         if (StringUtil.isNotBlank(ownerInfo.getPhone()) && !StringUtil.isPhone(ownerInfo.getPhone())) {
             throw new CustomException(ErrorMsgEnum.OWNER_PHONE_ERROR);
         }
@@ -126,10 +118,6 @@ public class OrderController {
 
         if (StringUtil.isBlank(orderInsertReqObj.getDestination())) {
             throw new CustomException(ErrorMsgEnum.DESTINATION_IS_NULL);
-        }
-
-        if (Objects.isNull(orderInsertReqObj.getDepartureDate())) {
-            throw new CustomException(ErrorMsgEnum.DEPARTURE_DATE_IS_NULL);
         }
 
         if (StringUtil.isBlank(orderInsertReqObj.getTrainNumber())) {
