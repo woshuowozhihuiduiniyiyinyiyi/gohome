@@ -11,11 +11,6 @@ public class OrderInsertReqObj {
     private Integer id;
 
     /**
-     * 业主信息
-     */
-    private OwnerInsertReqObj ownerInfo;
-
-    /**
      * 起点
      */
     private String origin;
@@ -75,6 +70,24 @@ public class OrderInsertReqObj {
      */
     private Double robbingPrice;
 
+    /**
+     * 订单联系手机号
+     */
+    private String phone;
+
+    /**
+     * 业主id
+     */
+    private Integer ownerId;
+
+    public Integer getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
+    }
+
     public String getExpectDate() {
         return expectDate;
     }
@@ -89,14 +102,6 @@ public class OrderInsertReqObj {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public OwnerInsertReqObj getOwnerInfo() {
-        return ownerInfo;
-    }
-
-    public void setOwnerInfo(OwnerInsertReqObj ownerInfo) {
-        this.ownerInfo = ownerInfo;
     }
 
     public String getOrigin() {
@@ -185,5 +190,13 @@ public class OrderInsertReqObj {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

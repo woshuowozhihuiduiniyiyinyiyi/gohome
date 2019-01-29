@@ -103,12 +103,15 @@ public class OrderController {
             throw new CustomException(ErrorMsgEnum.SAVE_ORDER_PARAM_VALID);
         }
 
-        if (Objects.isNull(orderInsertReqObj.getOwnerInfo())) {
-            throw new CustomException(ErrorMsgEnum.OWNER_IS_NULL);
+        if (Objects.isNull(orderInsertReqObj.getId())) {
+            throw new CustomException(ErrorMsgEnum.ORDER_ID_IS_NULL);
         }
 
-        OwnerInsertReqObj ownerInfo = orderInsertReqObj.getOwnerInfo();
-        if (StringUtil.isNotBlank(ownerInfo.getPhone()) && !StringUtil.isPhone(ownerInfo.getPhone())) {
+        if (Objects.isNull(orderInsertReqObj.getOwnerId())) {
+            throw new CustomException(ErrorMsgEnum.OWNER_ID_IS_NULL);
+        }
+
+        if (StringUtil.isBlank(orderInsertReqObj.getPhone())) {
             throw new CustomException(ErrorMsgEnum.OWNER_PHONE_ERROR);
         }
 

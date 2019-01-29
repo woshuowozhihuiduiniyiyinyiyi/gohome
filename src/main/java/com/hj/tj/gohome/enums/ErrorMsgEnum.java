@@ -11,10 +11,10 @@ public enum ErrorMsgEnum {
 
     // 订单错误
     SAVE_ORDER_PARAM_VALID(5200, "保存订单参数错误", "保存订单参数错误"),
-    OWNER_IS_NULL(5200, "客户信息为空", "客户信息为空"),
+    OWNER_ID_IS_NULL(5200, "客户Id为空", "客户Id为空"),
     OWNER_WX_ACCOUNT_IS_NULL(5201, "客户微信号为空", "客户微信号为空"),
     OWNER_WX_NICKNAME_IS_NULL(5202, "客户昵称为空", "客户昵称为空"),
-    OWNER_PHONE_ERROR(5203, "业主手机号错误", "业主手机号错误"),
+    OWNER_PHONE_ERROR(5203, "订单联系手机号不能为空", "订单联系手机号不能为空"),
     ORIGIN_IS_NULL(5204, "出发地为空", "出发地为空"),
     DESTINATION_IS_NULL(5205, "目的地为空", "目的地为空"),
     DEPARTURE_DATE_IS_NULL(5206, "出发日期为空", "出发日期为空"),
@@ -29,6 +29,7 @@ public enum ErrorMsgEnum {
     ROBBING_ID_IS_NULL(5214, "抢票用户为空", "抢票用户为空"),
     ROBBING_PRICE_ERROR(5214, "抢票价格错误", "抢票价格错误"),
     ORDER_NOT_EXIST(5215, "订单不存在", "订单不存在"),
+    ORDER_ID_IS_NULL(5216, "订单id为空", "订单id为空"),
 
     ;
 

@@ -133,29 +133,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public Integer saveOrder(OrderInsertReqObj orderInsertReqObj) throws Exception {
-        Integer ownerId = ownerService.saveOwner(orderInsertReqObj.getOwnerInfo());
-        if (Objects.isNull(ownerId) || ownerId.compareTo(0) <= 0) {
-            logger.error("[action = `saveOrder`, save owner error.ownerId:{}]", ownerId);
-            throw new CustomException(ErrorMsgEnum.SYS_ERR);
-        }
-
-        Integer orderId;
-        if (Objects.nonNull(orderInsertReqObj.getId())) {
-            // 更新
-            Order order = genOrder(orderInsertReqObj, ownerId);
-
-            orderMapper.updateByPrimaryKeySelective(order);
-
-            orderId = orderInsertReqObj.getId();
-        } else {
-            // 插入
-            Order order = genOrder(orderInsertReqObj, ownerId);
-            order.setCreatedAt(new Date());
-
-            orderMapper.insertSelective(order);
-
-            orderId = order.getId();
-        }
+        Order order = genOrder(orderInsertReqObj);
+        orderMapper.updateByPrimaryKeySelective(order);
+        Integer orderId = orderInsertReqObj.getId();
 
         List<Integer> passengerIdList = passengerService.batchSavePassenger(orderInsertReqObj.getPassengerList());
         if (CollectionUtils.isEmpty(passengerIdList)) {
@@ -262,7 +242,7 @@ public class OrderServiceImpl implements OrderService {
      * @param orderInsertReqObj 插入订单请求参数
      * @return 订单实体
      */
-    private Order genOrder(OrderInsertReqObj orderInsertReqObj, Integer ownerId) {
+    private Order genOrder(OrderInsertReqObj orderInsertReqObj) {
         Order order = new Order();
         BeanUtils.copyProperties(orderInsertReqObj, order);
 
@@ -276,14 +256,14 @@ public class OrderServiceImpl implements OrderService {
             }
         }
 
-        order.setStatus(orderInsertReqObj.getStatus().byteValue());
-        if (Objects.isNull(orderInsertReqObj.getStatus())) {
-            order.setStatus(BaseStatusEnum.UN_DELETE.getValue());
+        order.setStatus(BaseStatusEnum.UN_DELETE.getValue());
+        if (Objects.nonNull(orderInsertReqObj.getStatus())) {
+            order.setStatus(orderInsertReqObj.getStatus().byteValue());
         }
 
         order.setUpdatedAt(new Date());
 
-        order.setOwnerId(ownerId);
+        order.setOwnerId(orderInsertReqObj.getOwnerId());
 
         return order;
     }
