@@ -23,6 +23,12 @@ public class OrderReqObj {
     private Date departureDateMax;
 
     /**
+     * 用户期待的出发时间
+     */
+    private Date expectDateMin;
+    private Date expectDateMax;
+
+    /**
      * 状态
      */
     private Integer status;
@@ -146,5 +152,21 @@ public class OrderReqObj {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Date getExpectDateMin() {
+        return expectDateMin;
+    }
+
+    public void setExpectDateMin(Date expectDateMin) {
+        this.expectDateMin = expectDateMin;
+    }
+
+    public Date getExpectDateMax() {
+        return expectDateMax;
+    }
+
+    public void setExpectDateMax(Date expectDateMax) {
+        this.expectDateMax = expectDateMax;
     }
 }

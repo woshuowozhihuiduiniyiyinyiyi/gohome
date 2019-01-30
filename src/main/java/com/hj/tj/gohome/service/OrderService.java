@@ -55,4 +55,10 @@ public interface OrderService {
      * 统计数据
      */
     OrderStatisticDataResObj statisticData();
+
+
+    /**
+     * 刷新用户出发日期日期
+     */
+    void refreshQueryDate();
 }

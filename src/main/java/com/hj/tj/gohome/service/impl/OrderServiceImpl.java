@@ -50,6 +50,12 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private PortalUserMapper portalUserMapper;
 
+    @Resource
+    private ExpectDateQueryMapper expectDateQueryMapper;
+
+    @Resource
+    private OrderExpectDateQueryMapper orderExpectDateQueryMapper;
+
     @Override
     public List<OrderResObj> listOrder(OrderReqObj orderReqObj, Page page) {
         if (Objects.isNull(page)) {
@@ -67,6 +73,10 @@ public class OrderServiceImpl implements OrderService {
 
         if (StringUtil.isNotBlank(orderReqObj.getPassengerIdCard()) || StringUtil.isNotBlank(orderReqObj.getPassengerName())) {
             getIdListByPassengerInfo(orderReqObj, queryIdList);
+        }
+
+        if (Objects.nonNull(orderReqObj.getExpectDateMin()) || Objects.nonNull(orderReqObj.getExpectDateMax())) {
+            getIdListByDepartureDate(orderReqObj, queryIdList);
         }
 
         if (!CollectionUtils.isEmpty(queryIdList)) {
@@ -105,6 +115,38 @@ public class OrderServiceImpl implements OrderService {
         return orderResObjList;
     }
 
+    private void getIdListByDepartureDate(OrderReqObj orderReqObj, List<Integer> queryIdList) {
+        ExpectDateQueryExample expectDateQueryExample = new ExpectDateQueryExample();
+        ExpectDateQueryExample.Criteria criteria = expectDateQueryExample.createCriteria();
+
+        if (Objects.nonNull(orderReqObj.getExpectDateMax()) && Objects.nonNull(orderReqObj.getExpectDateMin())) {
+            criteria.andExpectDateBetween(orderReqObj.getExpectDateMin(), orderReqObj.getExpectDateMax());
+        } else if (Objects.nonNull(orderReqObj.getExpectDateMin())) {
+            criteria.andExpectDateGreaterThanOrEqualTo(orderReqObj.getExpectDateMin());
+        } else if (Objects.nonNull(orderReqObj.getExpectDateMax())) {
+            criteria.andExpectDateLessThanOrEqualTo(orderReqObj.getExpectDateMax());
+        }
+
+        List<ExpectDateQuery> expectDateQueries = expectDateQueryMapper.selectByExample(expectDateQueryExample);
+        if (CollectionUtils.isEmpty(expectDateQueries)) {
+            queryIdList.add(-1);
+            return;
+        }
+
+        List<Integer> expectDateQueryIdList = expectDateQueries.stream().map(ExpectDateQuery::getId).collect(Collectors.toList());
+        OrderExpectDateQueryExample orderExpectDateQueryExample = new OrderExpectDateQueryExample();
+        orderExpectDateQueryExample.createCriteria().andExpectDateQueryIdIn(expectDateQueryIdList).andStatusEqualTo(BaseStatusEnum.UN_DELETE.getValue());
+
+        List<OrderExpectDateQuery> orderExpectDateQueries = orderExpectDateQueryMapper.selectByExample(orderExpectDateQueryExample);
+        if (CollectionUtils.isEmpty(orderExpectDateQueries)) {
+            queryIdList.add(-1);
+            return;
+        }
+
+        List<Integer> orderIds = orderExpectDateQueries.stream().map(OrderExpectDateQuery::getOrderId).collect(Collectors.toList());
+        queryIdList.addAll(orderIds);
+    }
+
     @Override
     public Integer countByReqObj(OrderReqObj orderReqObj) {
 
@@ -137,6 +179,9 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.updateByPrimaryKeySelective(order);
         Integer orderId = orderInsertReqObj.getId();
 
+        List<Integer> expectDateQueryIdList = insertToExpectDate(orderInsertReqObj.getExpectDate());
+        insertToOrderExpectDateQuery(orderId, expectDateQueryIdList);
+
         List<Integer> passengerIdList = passengerService.batchSavePassenger(orderInsertReqObj.getPassengerList());
         if (CollectionUtils.isEmpty(passengerIdList)) {
             logger.error("[action = `saveOrder`, save passenger error.passengerIdList:{}]", passengerIdList);
@@ -147,6 +192,63 @@ public class OrderServiceImpl implements OrderService {
         relPassengerOrderService.saveRelPassengerOrder(passengerIdList, orderId);
 
         return orderId;
+    }
+
+    /**
+     * 插入日期查询关联表
+     *
+     * @param orderId               订单id
+     * @param expectDateQueryIdList 日期表id
+     */
+    private void insertToOrderExpectDateQuery(Integer orderId, List<Integer> expectDateQueryIdList) {
+        OrderExpectDateQueryExample orderExpectDateQueryExample = new OrderExpectDateQueryExample();
+        orderExpectDateQueryExample.createCriteria().andOrderIdEqualTo(orderId);
+        OrderExpectDateQuery updateRecord = new OrderExpectDateQuery();
+        updateRecord.setStatus(BaseStatusEnum.DELETE.getValue());
+        orderExpectDateQueryMapper.updateByExampleSelective(updateRecord, orderExpectDateQueryExample);
+
+        for (Integer expectDateId : expectDateQueryIdList) {
+            OrderExpectDateQuery insertRecord = new OrderExpectDateQuery();
+            insertRecord.setStatus(BaseStatusEnum.UN_DELETE.getValue());
+            insertRecord.setOrderId(orderId);
+            insertRecord.setExpectDateQueryId(expectDateId);
+
+            orderExpectDateQueryMapper.insertSelective(insertRecord);
+        }
+    }
+
+    /**
+     * 插入日期表
+     *
+     * @param expectDateString 用户期待日期字符串
+     * @return 所有用户期待日期字符串对应日期表的id
+     */
+    private List<Integer> insertToExpectDate(String expectDateString) {
+        List<Date> expectDateList = new ArrayList<>();
+        String[] expectDateStrArr = expectDateString.split("、");
+        for (String expectDateStr : expectDateStrArr) {
+            Date expectDate = DateUtil.formatStrToDate(expectDateStr, DateUtil.NORMAL_DATE_FORMAT);
+            expectDateList.add(expectDate);
+        }
+        ExpectDateQueryExample expectDateQueryExample = new ExpectDateQueryExample();
+        expectDateQueryExample.createCriteria().andExpectDateIn(expectDateList);
+        List<ExpectDateQuery> expectDateQueryList = expectDateQueryMapper.selectByExample(expectDateQueryExample);
+        Map<Date, ExpectDateQuery> expectDateQueryMap = expectDateQueryList.stream().collect(Collectors.toMap(ExpectDateQuery::getExpectDate, e -> e));
+
+        List<Integer> expectDateQueryIdList = new ArrayList<>();
+        for (Date expectDate : expectDateList) {
+            ExpectDateQuery expectDateQuery = expectDateQueryMap.get(expectDate);
+            if (Objects.isNull(expectDateQuery)) {
+                expectDateQuery = new ExpectDateQuery();
+                expectDateQuery.setExpectDate(expectDate);
+
+                expectDateQueryMapper.insertSelective(expectDateQuery);
+            }
+
+            expectDateQueryIdList.add(expectDateQuery.getId());
+        }
+
+        return expectDateQueryIdList;
     }
 
     @Override
@@ -234,6 +336,32 @@ public class OrderServiceImpl implements OrderService {
         }
 
         return orderStatisticDataResObj;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    public void refreshQueryDate() {
+        List<Order> orders = orderMapper.selectByExample(null);
+
+        if (CollectionUtils.isEmpty(orders)) {
+            return;
+        }
+
+        for (Order order : orders) {
+            if (StringUtil.isBlank(order.getExpectDate()) && Objects.nonNull(order.getDepartureDate())) {
+                Order updateRecord = new Order();
+                updateRecord.setId(order.getId());
+                updateRecord.setExpectDate(DateUtil.formatDateToString(order.getDepartureDate(), DateUtil.NORMAL_DATE_FORMAT));
+                order.setExpectDate(DateUtil.formatDateToString(order.getDepartureDate(), DateUtil.NORMAL_DATE_FORMAT));
+
+                orderMapper.updateByPrimaryKeySelective(updateRecord);
+            } else if (StringUtil.isBlank(order.getExpectDate())) {
+                continue;
+            }
+
+            List<Integer> expectDateIdList = insertToExpectDate(order.getExpectDate());
+            insertToOrderExpectDateQuery(order.getId(), expectDateIdList);
+        }
     }
 
     /**
@@ -518,13 +646,6 @@ public class OrderServiceImpl implements OrderService {
             criteria.andCreatedAtLessThanOrEqualTo(orderReqObj.getCreatedAtMax());
         }
 
-        if (Objects.nonNull(orderReqObj.getDepartureDateMax()) && Objects.nonNull(orderReqObj.getDepartureDateMin())) {
-            criteria.andDepartureDateBetween(orderReqObj.getDepartureDateMin(), orderReqObj.getDepartureDateMax());
-        } else if (Objects.nonNull(orderReqObj.getDepartureDateMin())) {
-            criteria.andDepartureDateGreaterThanOrEqualTo(orderReqObj.getDepartureDateMin());
-        } else if (Objects.nonNull(orderReqObj.getDepartureDateMax())) {
-            criteria.andDepartureDateLessThanOrEqualTo(orderReqObj.getDepartureDateMax());
-        }
 
         if (Objects.nonNull(orderReqObj.getStatus())) {
             criteria.andStatusEqualTo(orderReqObj.getStatus().byteValue());

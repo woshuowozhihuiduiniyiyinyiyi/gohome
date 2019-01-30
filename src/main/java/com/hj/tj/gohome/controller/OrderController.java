@@ -97,6 +97,13 @@ public class OrderController {
         return JsonResponse.newOk(orderStatisticDataResObj);
     }
 
+    @RequestMapping("/order/refresh/query/date")
+    public JsonResponse refreshQueryDate(@RequestBody ApiRequest apiRequest){
+        orderService.refreshQueryDate();
+
+        return JsonResponse.newOk();
+    }
+
 
     private void saveOrderParamValidation(OrderInsertReqObj orderInsertReqObj) {
         if (Objects.isNull(orderInsertReqObj)) {
